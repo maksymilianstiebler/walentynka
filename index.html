@@ -122,14 +122,7 @@ const diffDays = Math.floor(diffTime / (1000*60*60*24));
 document.getElementById("daysTogether").innerText =
 "Jesteśmy razem już " + diffDays + " dni ❤️";
 
-/* LICZNIK OD OTWARCIA */
-const start = new Date().getTime();
-setInterval(() => {
-    const now = new Date().getTime();
-    const diff = Math.floor((now - start)/1000);
-    document.getElementById("timer").innerText =
-        "Myślę o Tobie od " + diff + " sekund 💖";
-}, 1000);
+
 
 /* UCIEKAJĄCY PRZYCISK */
 function moveButton() {
@@ -152,7 +145,7 @@ setInterval(() => {
 /* PO KLIKNIĘCIU TAK */
 function yesAnswer() {
     document.getElementById("question").innerHTML =
-    "Julka ❤️<br>Gratulacje.<br>Kocham Cię 💖<br>– Twój Maks";
+    "Julka ❤️<br>Kocham Cię 💖<br>– Twój Maks";
 
     confetti();
 }
