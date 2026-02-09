@@ -112,6 +112,14 @@ button {
 </div>
 
 <script>
+/* MAGICZNA NAPRAWA MUZYKI */
+/* Przeglądarki pozwalają grać dopiero po kliknięciu. 
+   Ten kod włączy muzykę, gdy tylko ktoś dotknie strony */
+document.addEventListener('click', function() {
+    var audio = document.getElementById("muzyka");
+    audio.play();
+}, { once: true }); // To sprawia, że próbuje odpalić tylko za pierwszym razem
+
 
 /* LICZNIK DNI RAZEM */
 const startDate = new Date("2020-08-25");
@@ -119,50 +127,59 @@ const today = new Date();
 const diffTime = today - startDate;
 const diffDays = Math.floor(diffTime / (1000*60*60*24));
 
-document.getElementById("daysTogether").innerText =
+document.getElementById("daysTogether").innerText = 
 "Jesteśmy razem już " + diffDays + " dni ❤️";
-
-
 
 /* UCIEKAJĄCY PRZYCISK */
 function moveButton() {
     const btn = document.getElementById("noBtn");
-    btn.style.top = Math.random() * 250 + "px";
-    btn.style.left = Math.random() * 250 + "px";
+    // Zmieniamy zakres ruchu, żeby przycisk nie uciekał poza ekran na telefonie
+    const maxWidth = window.innerWidth - 100; 
+    const maxHeight = window.innerHeight - 100;
+    
+    btn.style.position = "fixed"; // Ważna zmiana dla płynniejszego ruchu
+    btn.style.top = Math.random() * maxHeight + "px";
+    btn.style.left = Math.random() * maxWidth + "px";
 }
 
-/* SERDUSZKA */
+/* SERDUSZKA (DODAJEMY IM TROCHĘ LOSOWOŚCI) */
 setInterval(() => {
     const heart = document.createElement("div");
     heart.className = "heart";
     heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (Math.random() * 25 + 10) + "px";
+    heart.style.left = Math.random() * 90 + "vw"; // Żeby nie wychodziły za mocno w prawo
+    heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+    heart.style.animationDuration = (Math.random() * 3 + 2) + "s"; // Różna prędkość
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 4000);
-}, 200);
+}, 300);
 
 /* PO KLIKNIĘCIU TAK */
 function yesAnswer() {
-    document.getElementById("question").innerHTML =
+    // Na wszelki wypadek próbujemy odpalić muzykę też tutaj
+    var audio = document.getElementById("muzyka");
+    audio.play();
+
+    document.getElementById("question").innerHTML = 
     "Julka ❤️<br>Kocham Cię 💖<br>– Twój Maks";
+    
+    // Ukrywamy przyciski po zgodzie
+    document.querySelector(".yes").style.display = "none";
+    document.getElementById("noBtn").style.display = "none";
 
     confetti();
 }
 
 /* KONFETTI */
 function confetti() {
-    for (let i=0; i<60; i++) {
+    for (let i=0; i<100; i++) {
         const c = document.createElement("div");
         c.className = "confetti";
         c.innerHTML = "💖";
         c.style.left = Math.random()*100 + "vw";
+        c.style.animationDuration = (Math.random() * 2 + 2) + "s";
         document.body.appendChild(c);
-        setTimeout(()=>c.remove(),3000);
+        setTimeout(()=>c.remove(), 4000);
     }
 }
-
 </script>
-
-</body>
-</html>
